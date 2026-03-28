@@ -552,16 +552,91 @@ body {
   color: var(--text);
 }
 
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .chat-header {
+    padding: 0.75rem 1rem;
+    height: 60px;
+  }
+
+  .chat-brand {
+    gap: 0.5rem;
+  }
+
+  .chat-title {
+    font-size: 1.25rem;
+  }
+
+  .status-text, .welcome-text {
+    display: none;
+  }
+
+  .chat-actions {
+    gap: 0.75rem;
+  }
+
+  .chat-sidebar {
+    position: fixed;
+    top: 60px;
+    left: -260px;
+    bottom: 0;
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+    border-right: 1px solid var(--border);
+  }
+
+  .chat-sidebar.show {
+    transform: translateX(260px);
+  }
+
+  .chat-layout.sidebar-open .chat-window {
+    filter: brightness(0.6);
+    pointer-events: none;
+  }
+
+  .message-list {
+    padding: 1rem;
+  }
+
+  .message-wrapper {
+    max-width: 85%;
+  }
+
+  .message-input-container {
+    padding: 1rem;
+  }
+
   .split-layout {
     flex-direction: column;
   }
+
   .split-left {
     min-height: 40vh;
     border-right: none;
     border-bottom: 1px solid var(--border);
   }
-  .chat-sidebar {
-    display: none;
+
+  .branding h1 {
+    font-size: 2.5rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+    margin-top: -2rem;
   }
 }

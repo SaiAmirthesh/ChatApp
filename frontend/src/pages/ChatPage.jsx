@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import ThemeSelector from '../components/ThemeSelector';
-import { LogOut, Send, Hash } from 'lucide-react';
+import { LogOut, Send, Hash, Menu, X } from 'lucide-react';
 import { useChat } from '../hooks/useChat';
 
 const ChatPage = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [inputMessage, setInputMessage] = useState('');
+  const [showSidebar, setShowSidebar] = useState(false);
   const messagesEndRef = useRef(null);
   
   const storedName = localStorage.getItem('chat-username');
@@ -51,14 +52,20 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="chat-layout">
+    <div className={`chat-layout ${showSidebar ? 'sidebar-open' : ''}`}>
       <header className="chat-header">
         <div className="chat-brand">
+          <button 
+            className="mobile-menu-btn icon-btn" 
+            onClick={() => setShowSidebar(!showSidebar)}
+          >
+            {showSidebar ? <X size={20} /> : <Menu size={20} />}
+          </button>
           <img src={logo} alt="Ping Logo" className="chat-logo" />
           <h2 className="chat-title">Ping</h2>
           <div className="status-indicator ml-4">
             <span className={`status-dot ${isConnected ? 'connected' : ''}`}></span>
-            {isConnected ? 'Connected' : 'Connecting...'}
+            <span className="status-text">{isConnected ? 'Connected' : 'Connecting...'}</span>
           </div>
         </div>
         <div className="chat-actions">
@@ -71,7 +78,7 @@ const ChatPage = () => {
       </header>
 
       <main className="chat-main">
-        <aside className="chat-sidebar">
+        <aside className={`chat-sidebar ${showSidebar ? 'show' : ''}`}>
           <h3 className="section-title">Channels</h3>
           <div className="active-channel">
             <Hash size={18} />
@@ -80,7 +87,7 @@ const ChatPage = () => {
           <p className="text-xs text-muted mt-4 font-medium opacity-60">MORE CHANNELS COMING SOON</p>
         </aside>
 
-        <div className="chat-window">
+        <div className="chat-window" onClick={() => showSidebar && setShowSidebar(false)}>
           {isLoading && (
             <div className="loading-screen">
               <div className="spinner"></div>
